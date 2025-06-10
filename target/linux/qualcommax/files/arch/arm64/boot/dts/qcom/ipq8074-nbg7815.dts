@@ -382,8 +382,7 @@
 
 &sdhc_1 {
 	status = "okay";
-	/* unstable, problem with the hs400 > h200 speed switch */
-	/delete-property/ mmc-hs400-1_8v;
+
 	mmc-hs200-1_8v;
 	mmc-ddr-1_8v;
 	vqmmc-supply = <&l11>;

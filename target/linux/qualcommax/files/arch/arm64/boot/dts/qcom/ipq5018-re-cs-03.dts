@@ -125,8 +125,10 @@
 &sdhc_1 {
 	status = "okay";
 
-	pinctrl-0 = <&qpic_pins>;
+	pinctrl-0 = <&emmc_pins>;
 	pinctrl-names = "default";
+
+	max-frequency = <192000000>;
 
 	/delete-property/ mmc-hs400-1_8v;
 	mmc-hs200-1_8v;

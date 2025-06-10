@@ -350,10 +350,6 @@
 &sdhc_1 {
 	status = "okay";
 
-	/* According to the stock dts from the QNAP gpl drop
-	 * the emmc has a problem with the hs400 > hs200 speed switch.
-	 * Therefore remove the mmc-hs400-1_8v property
-	*/
 	/delete-property/ mmc-hs400-1_8v;
 	mmc-hs200-1_8v;
 	mmc-ddr-1_8v;
