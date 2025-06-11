@@ -48,6 +48,7 @@
  *         \
  *          \
  *           +-> UPD3 ----> QCN6102 5G Radio on PCIE0
+ *
  * ==================================================================
  */
 
@@ -147,70 +148,10 @@
 	};
 };
 
-&mdio0 {
-	status = "okay";
-};
-
-&mdio1 {
-	status = "okay";
-
-	pinctrl-0 = <&mdio1_pins>;
-	pinctrl-names = "default";
-	reset-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
-
-	// QCA8337 Phy
-	qca8337_0: ethernet-phy@0 {
-		reg = <0>;
-	};
-	qca8337_1: ethernet-phy@1 {
-		reg = <1>;
-	};
-	qca8337_2: ethernet-phy@2 {
-		reg = <2>;
-	};
-	qca8337_3: ethernet-phy@3 {
-		reg = <3>;
-	};
-	qca8337_4: ethernet-phy@4 {
-		reg = <4>;
-	};
-
-	// QCA8337 Switch
-	switch1: ethernet-switch@17 {
-		compatible = "qca,qca8337";
-		#address-cells = <1>;
-		#size-cells = <0>;
-		reg = <17>;
-
-		ports {
-			port@1 {
-				reg = <1>;
-				phy-handle = <&qca8337_0>;
-			};
-			port@2 {
-				reg = <2>;
-				phy-handle = <&qca8337_1>;
-			};
-			port@3 {
-				reg = <3>;
-				phy-handle = <&qca8337_2>;
-			};
-			port@4 {
-				reg = <4>;
-				phy-handle = <&qca8337_3>;
-			};
-			port@5 {
-				reg = <5>;
-				phy-handle = <&qca8337_4>;
-			};
-		};
-	};
-};
-
 &q6v5_wcss {
 	status = "okay";
 
-	memory-region = <&q6_mem_regions>;
+	memory-region = <&q6_mem_region>;
 	firmware-name = "ath11k/IPQ5018/hw1.0/q6_fw.mdt", "ath11k/IPQ5018/hw1.0/m3_fw.mdt", "ath11k/QCN6122/hw1.0/m3_fw.mdt";
 
 	// IPQ5018
@@ -286,6 +227,10 @@
 	status = "okay";
 	pinctrl-0 = <&serial_0_pins>;
 	pinctrl-names = "default";
+};
+
+&mdio0 {
+	status = "okay";
 };
 
 &crypto {
