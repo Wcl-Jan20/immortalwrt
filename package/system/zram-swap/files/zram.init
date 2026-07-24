@@ -18,8 +18,8 @@ zram_getsize()	# in megabytes
 	local ram_size="$( ram_getsize )"
 
 	if [ -z "$zram_size" ]; then
-		# e.g. 6mb for 16mb-routers or 61mb for 128mb-routers
-		echo $(( ram_size / 2048 ))
+		# ram 1/3
+		echo $(( ram_size / 3072 ))
 	else
 		echo "$zram_size"
 	fi
