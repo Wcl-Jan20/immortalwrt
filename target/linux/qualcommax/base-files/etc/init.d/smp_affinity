@@ -81,5 +81,7 @@ EOF
 	if [ "$changed" -gt 0 ] || [ "$failed" -gt 0 ]; then
 		log_status "IRQ affinity: changed=$changed failed=$failed pending=$pending"
 	fi
+	# Receive steering depends on the final ring interrupt affinities.
+	[ -x /etc/init.d/packet_steering ] && /etc/init.d/packet_steering reload
 	[ "$failed" -eq 0 ]
 }
