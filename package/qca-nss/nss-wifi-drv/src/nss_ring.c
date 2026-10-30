@@ -335,8 +335,8 @@ int nss_data_send(struct nss_core *core, struct sk_buff *skb, u32 if_num,
  */
 #define NSS_LOG_SHADOW_ENTRIES	1024
 /* How often the shadow samples the firmware's write index. A sample that
- * finds nothing new costs one read, but the timer itself is armed for as long
- * as a core is loaded, so the rate is a standing cost on a box whose whole
+	 * finds nothing new costs one read, but the timer stays armed until the
+	 * shadow is full, so the rate is a standing cost on a box whose whole
  * point is not to have one. It is a parameter so the cost can be measured
  * against the risk of missing a line rather than argued about.
  */
@@ -398,6 +398,8 @@ static enum hrtimer_restart nss_log_shadow_tick(struct hrtimer *t)
 	struct nss_core *core = container_of(t, struct nss_core, shadow_timer);
 
 	nss_log_shadow_take(core);
+	if (READ_ONCE(core->shadow_held) >= NSS_LOG_SHADOW_ENTRIES)
+		return HRTIMER_NORESTART;
 	hrtimer_forward_now(t, us_to_ktime(READ_ONCE(nss_log_poll_us)));
 
 	return HRTIMER_RESTART;
